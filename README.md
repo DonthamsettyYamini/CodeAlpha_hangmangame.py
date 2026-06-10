@@ -1,49 +1,28 @@
-🎮 Hangman Game
+# Hangman Game
 
-Overview
+A simple text-based Hangman game built with Python. Guess the hidden word one letter at a time before using all 6 chances.
 
-A Python-based console Hangman game where players guess randomly selected company names letter by letter before running out of attempts.
+## Features
 
-Features
+* 5 predefined words
+* Random word selection
+* 6 incorrect guesses allowed
+* Win/Lose conditions
 
-- Random company name selection
-- Interactive gameplay
-- ASCII Hangman visualization
-- Win/Loss detection
-- Replay option
+## Requirements
 
-Requirements
+* Python 3.x
 
-- Python 3.x
-- Built-in modules:
-  - "random"
-  - "os"
+## Run
 
-How to Run
-
+```bash
 python hangman.py
+```
 
-How to Play
+## Word List
 
-1. Guess one letter at a time.
-2. Correct guesses reveal letters in the word.
-3. Incorrect guesses add parts to the Hangman.
-4. Win by guessing the word before 6 wrong attempts.
+apple, mango, grape, peach, melon
 
-Word List
+## Author
 
-Google, Amazon, Disney, PayPal, Toyota, Oracle, Subway
-
-Future Improvements
-
-- More company names
-- Difficulty levels
-- Hint system
-- Score tracking
-- GUI version
-
-Author
-
-DonthamsettyYamini
-
-Developed as Task 1 for the CodeAlpha Python Programming Internship.
+Yamini
