@@ -1,144 +1,50 @@
 import random
-import os
 
-def clear_screen():
-    os.system('cls' if os.name == 'nt' else 'clear')
+# 5 predefined words
+words = ["apple", "mango", "grape", "peach", "melon"]
 
-def display_title():
-    print("=" * 40)
-    print("       🎮 HANGMAN GAME 🎮")
-    print("       Hint: Guess a COMPANY NAMES")
-    print("=" * 40)
+# Select a random word
+word = random.choice(words)
 
-def draw_hangman(wrong):
-    stages = [
-        """
-           -----
-               |
-               |
-               |
-               |
-               |
-        ==========""",
-        """
-           -----
-           |   |
-               |
-               |
-               |
-               |
-        ==========""",
-        """
-           -----
-           |   |
-           O   |
-               |
-               |
-               |
-        ==========""",
-        """
-           -----
-           |   |
-           O   |
-           |   |
-               |
-               |
-        ==========""",
-        """
-           -----
-           |   |
-           O   |
-          /|   |
-               |
-               |
-        ==========""",
-        """
-           -----
-           |   |
-           O   |
-          /|\  |  
-               |
-               |
-        ==========""",
-        """
-           -----
-           |   |
-           O   |
-          /|\  |  
-          / \  |
-               |
-        =========="""
-    ]
-    print(stages[wrong])
+guessed_letters = []
+wrong_guesses = 0
+max_wrong_guesses = 6
 
-def check_win(word, guessed_letters):
+print("Welcome to Hangman!")
+
+while wrong_guesses < max_wrong_guesses:
+
+    # Display the word
+    display_word = ""
     for letter in word:
-        if letter not in guessed_letters:
-            return False
-    return True
-
-def play_game():
-    words = ["google", "amazon", "disney", "paypal", "toyota", "oracle", "subway"]
-    word = random.choice(words)
-    guessed_letters = []
-    wrong_guesses = 0
-    max_wrong_guesses = 6
-
-    while wrong_guesses < max_wrong_guesses:
-        draw_hangman(wrong_guesses)
-        display_word = ""
-        for letter in word:
-            if letter in guessed_letters:
-                display_word += letter + " "
-            else:
-                display_word += "_ "
-        print("Word:", display_word)
-        print(f"Wrong guesses left: {max_wrong_guesses - wrong_guesses}")
-        print(f"Guessed letters: {' '.join(guessed_letters)}")
-        guess = input("Enter a letter: ").lower()
-        if guess in guessed_letters:
-            print("You already guessed that letter!")
-        elif guess in word:
-            guessed_letters.append(guess)
-            print("Good guess!")
+        if letter in guessed_letters:
+            display_word += letter + " "
         else:
-            wrong_guesses += 1
-            print("Wrong!")
+            display_word += "_ "
 
-        # CHECK WIN
-        if check_win(word, guessed_letters):
-            draw_hangman(wrong_guesses)
-            print("\n" + "=" * 40)
-            print("🎉 CONGRATULATIONS! YOU WON THE GAME 🎉")
-            print("=" * 40)
-            print(f"\n✅ The Correct Word Was : {word.upper()}")
-            print("\n🏆 Excellent Performance!")
-            print("You guessed the hidden word successfully.")
-            print("Thank you for playing Hangman Game!\n")
-            return
+    print("\nWord:", display_word)
 
-    # GAME OVER
-    draw_hangman(wrong_guesses)
-    print("\n" + "=" * 40)
-    print("💀 GAME OVER!")
-    print("=" * 40)
-    print(f"\n❌ The Correct Word Was : {word.upper()}")
-    print("\nBetter Luck Next Time!\n")
+    # Check if player won
+    if "_" not in display_word:
+        print("Congratulations! You guessed the word:", word)
+        break
 
-# MAIN PROGRAM
-def main():
-    clear_screen()
-    display_title()
-    while True:
-        play_game()
-        play_again = input("Do you want to play again? (yes/no) : ").lower()
-        if play_again != "yes":
-            print("\nThank You For Playing Hangman Game!")
-            print("Program Closed Successfully.\n")
-            break
-        clear_screen()
-        display_title()
+    guess = input("Enter a letter: ").lower()
 
-# RUN PROGRAM
-if __name__ == "__main__":
-    main()
+    if guess in guessed_letters:
+        print("You already guessed that letter.")
+
+    elif guess in word:
+        guessed_letters.append(guess)
+        print("Correct!")
+
+    else:
+        guessed_letters.append(guess)
+        wrong_guesses += 1
+        print("Wrong guess!")
+        print("Remaining chances:", max_wrong_guesses - wrong_guesses)
+
+# Game Over
+if wrong_guesses == max_wrong_guesses:
+    print("\nGame Over!")
+    print("The word was:", word)
